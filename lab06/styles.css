@@ -1,0 +1,8 @@
+body {font-family:Trebuchet MS;}
+
+groupedselectors h1, h2 {color: darkslategray;}
+
+.evenrow {background-color: lightgrey;}
+
+h1 {font-size: 4em;}
+h2 {font-size: 3em;}
