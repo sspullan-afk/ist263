@@ -35,7 +35,7 @@
 
      </style>
      <script>
-        window.onload = function planetsOff(){
+        function PlanetsOff(){
             document.getElementById("venus").style.display   = "none";
             document.getElementById("earth").style.display   = "none";
             document.getElementById("mars").style.display    = "none";
@@ -137,14 +137,14 @@
          </div>
      </div>
      <div id="thumbnails">
-         <img src="../images/mecury.jpg" alt="mercury" id="mercurythumb">
-         <img src="../images/venus.jpg" alt="venus" id="venusthumb">
-         <img src="../images/earth.jpg" alt="earth" id="earththumb">
-         <img src="../images/mars.jpg" alt="mars" id="marsthumb">
-         <img src="../images/jupiter.jpg" alt="jupiter" id="jupiterthumb">
-         <img src="../images/saturn.jpg" alt="saturn" id="saturnthumb">
-         <img src="../images/uranus.jpg" alt="uranus" id="uranusthumb">
-         <img src="../images/neptune.jpg" alt="neptune" id="neptunethumb">
+         <img src="../images/mecury.jpg" alt="mercury" id="mercurythumb" onclick = "planetsOff(); mercuryOn();">
+         <img src="../images/venus.jpg" alt="venus" id="venusthumb" onclick = "planetsOff(); venusOn();">
+         <img src="../images/earth.jpg" alt="earth" id="earththumb" onclick = "planetsOff(); earthOn();">
+         <img src="../images/mars.jpg" alt="mars" id="marsthumb" onclick = "planetsOff(); marsOn();">
+         <img src="../images/jupiter.jpg" alt="jupiter" id="jupiterthumb" onclick = "planetsOff(); jupiterOn();">
+         <img src="../images/saturn.jpg" alt="saturn" id="saturnthumb" onclick = "planetsOff(); saturnOn();">
+         <img src="../images/uranus.jpg" alt="uranus" id="uranusthumb" onclick = "planetsOff(); uranusOn();">
+         <img src="../images/neptune.jpg" alt="neptune" id="neptunethumb" onclick = "planetsOff(); neptuneOn();">
      </div>
 
  </div>
