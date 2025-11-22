@@ -9,64 +9,181 @@
     </head>
 
     <body>
-        <a href="home.html">Home</a> <span>|</span>
-        <a href="stats.html">Stats</a> <span>|</span>
-        <a href="leaderboard.html">Leaderboard</a>
+      <a href="home.html">Home</a> <span>|</span>
+      <a href="stats.html">Stats</a> <span>|</span>
+      <a href="leaderboard.html">Leaderboard</a>
+      <div class="page">
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById('ski-day-form');
+            const tbody = document.getElementById('my-stats-body');
 
-        <header><h1>Track Your Stats</h1></header>
+            function getOrCreateUserId() {
+              let userId = localStorage.getItem('skiUserId');
+              if (!userId) {
+                const name = (prompt("First time here — enter a name for YOUR stats:") || "Anonymous").trim();
+                userId = name.replace(/\s+/g, "_").toLowerCase();
+                localStorage.setItem('skiUserId', userId);
+                localStorage.setItem('skiUserName', name);
+              }
+              return userId;
+            }
 
-        <p>Log your ski stats and see how your day stacks up! Record your conditions, speed, vertical, runs, and distance all in one place. Whether you’re chasing personal bests or just keeping memories of great days on the mountain, this page helps you capture every detail of your ski adventures</p>
-        <form id="ski-day-form" action="#" method="post">
-  <fieldset>
-    <legend>Ski Day Summary</legend>
+            function entriesKey(uid) {
+              return `skiEntries_${uid}`;
+            }
 
-    <div>
-      <label>Conditions:</label>
-      <div role="group" aria-labelledby="conditions-label" id="conditions-label">
-        <label><input type="radio" name="conditions" value="groomed" required> Groomed</label>
-        <label><input type="radio" name="conditions" value="icy"> Icy</label>
-        <label><input type="radio" name="conditions" value="powder"> Powder</label>
+            const userId = getOrCreateUserId();
+            const userName = localStorage.getItem('skiUserName') || "Anonymous";
+
+            function loadEntries() {
+              return JSON.parse(localStorage.getItem(entriesKey(userId)) || "[]");
+            }
+
+            function saveEntries(entries) {
+              localStorage.setItem(entriesKey(userId), JSON.stringify(entries));
+            }
+
+            function addRow(entry) {
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td>${entry.createdAt || ""}</td>
+                <td>${entry.conditions || ""}</td>
+                <td>${Number(entry.maxSpeed ?? "").toString()}</td>
+                <td>${Number.isFinite(entry.runs) ? entry.runs : ""}</td>
+                <td>${Number.isFinite(entry.vertical) ? entry.vertical : ""}</td>
+                <td>${entry.timeSkiing || ""}</td>
+                <td>${Number(entry.distance ?? "").toString()}</td>
+              `;
+              tbody.appendChild(tr);
+            }
+
+            function renderTable() {
+              tbody.innerHTML = "";
+              loadEntries().forEach(addRow);
+            }
+
+            renderTable();
+
+            form.addEventListener('submit', (e) => {
+              e.preventDefault();
+
+              const conditionsEl = document.querySelector('input[name="conditions"]:checked');
+              const conditions = conditionsEl ? conditionsEl.value : "";
+
+              const maxSpeed   = parseFloat(document.getElementById('maxSpeed').value);
+              const runs       = parseInt(document.getElementById('runs').value, 10);
+              const vertical   = parseInt(document.getElementById('vertical').value, 10);
+              const timeSkiing = document.getElementById('timeSkiing').value;
+              const distance   = parseFloat(document.getElementById('distance').value);
+
+              let timeHours = null;
+              if (timeSkiing && timeSkiing.includes(':')) {
+                const [hh, mm] = timeSkiing.split(':').map(Number);
+                timeHours = (hh || 0) + (mm || 0) / 60;
+              }
+
+              const entry = {
+                id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+                name: userName,
+                conditions,
+                maxSpeed,
+                runs,
+                vertical,
+                timeSkiing,
+                timeHours,
+                distance,
+                createdAt: new Date().toLocaleDateString()
+              };
+
+              const entries = loadEntries();
+              entries.push(entry);
+              saveEntries(entries);
+
+              form.reset();
+              renderTable();
+            });
+          });
+        </script>
+
+
+
+
+          <header><h1>Track Your Stats</h1></header>
+
+          <p>Log your ski stats and see how your day stacks up! Record your conditions, speed, vertical, runs, and distance all in one place. Whether you’re chasing personal bests or just keeping memories of great days on the mountain, this page helps you capture every detail of your ski adventures</p>
+          <div class="stats-flex">
+            <section class="card">
+              <form id="ski-day-form" action="#" method="post">
+                <fieldset>
+                  <legend>Ski Day Summary</legend>
+
+                  <div>
+                    <label>Conditions:</label>
+                    <div role="group" aria-labelledby="conditions-label" id="conditions-label">
+                      <label><input type="radio" name="conditions" value="groomed" required> Groomed</label>
+                      <label><input type="radio" name="conditions" value="icy"> Icy</label>
+                      <label><input type="radio" name="conditions" value="powder"> Powder</label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="maxSpeed">Max speed (mph)</label>
+                    <input id="maxSpeed" name="maxSpeed" type="number" inputmode="decimal"
+                          min="0" max="120" step="0.1" placeholder="e.g., 48.7" required>
+                  </div>
+
+                  <div>
+                    <label for="runs">Number of runs</label>
+                    <input id="runs" name="runs" type="number" inputmode="numeric"
+                          min="0" max="200" step="1" placeholder="e.g., 12" required>
+                  </div>
+
+                  <div>
+                    <label for="vertical">Total vertical (ft)</label>
+                    <input id="vertical" name="vertical" type="number" inputmode="numeric"
+                          min="0" max="200000" step="1" placeholder="e.g., 14500" required>
+                  </div>
+
+                  <div>
+                    <label for="timeSkiing">Time spent skiing (HH:MM)</label>
+                    <input id="timeSkiing" name="timeSkiing" type="time" step="60" required>
+                  </div>
+
+                  <div>
+                    <label for="distance">Total distance (miles)</label>
+                    <input id="distance" name="distance" type="number" inputmode="decimal"
+                          min="0" max="300" step="0.1" placeholder="e.g., 23.4" required>
+                  </div>
+
+                  <button type="submit">Save Ski Day</button>
+                  <button type="reset">Reset</button>
+                </fieldset>
+              </form>
+            </section>
+            <section class="card">
+              <h2>My Ski Days</h2>
+              <table id="my-stats-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Conditions</th>
+                    <th>Max Speed (mph)</th>
+                    <th>Runs</th>
+                    <th>Vertical (ft)</th>
+                    <th>Time (HH:MM)</th>
+                    <th>Distance (mi)</th>
+                  </tr>
+                </thead>
+                <tbody id="my-stats-body"></tbody>
+              </table>
+            </section>
+          </div>
+
+
+          <img src="p_images/logPage1.jpg" alt="Chairlift Photo" width = '200'>
+          <img src="p_images/logPage2.jpg" alt="Mountains Photo" width = '200'>
+      
       </div>
-    </div>
-
-    <div>
-      <label for="maxSpeed">Max speed (mph)</label>
-      <input id="maxSpeed" name="maxSpeed" type="number" inputmode="decimal"
-             min="0" max="120" step="0.1" placeholder="e.g., 48.7" required>
-    </div>
-
-    <div>
-      <label for="runs">Number of runs</label>
-      <input id="runs" name="runs" type="number" inputmode="numeric"
-             min="0" max="200" step="1" placeholder="e.g., 12" required>
-    </div>
-
-    <div>
-      <label for="vertical">Total vertical (ft)</label>
-      <input id="vertical" name="vertical" type="number" inputmode="numeric"
-             min="0" max="200000" step="1" placeholder="e.g., 14500" required>
-    </div>
-
-    <div>
-      <label for="timeSkiing">Time spent skiing (HH:MM)</label>
-      <input id="timeSkiing" name="timeSkiing" type="time" step="60" required>
-    </div>
-
-    <div>
-      <label for="distance">Total distance (miles)</label>
-      <input id="distance" name="distance" type="number" inputmode="decimal"
-             min="0" max="300" step="0.1" placeholder="e.g., 23.4" required>
-    </div>
-
-    <button type="submit">Save Ski Day</button>
-    <button type="reset">Reset</button>
-  </fieldset>
-</form>
-
-
-        <img src="p_images/logPage1.jpg" alt="Chairlift Photo" width = '200'>
-        <img src="p_images/logPage2.jpg" alt="Mountains Photo" width = '200'>
-    
-
     </body>
 </html>

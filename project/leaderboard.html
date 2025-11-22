@@ -4,35 +4,116 @@
   <meta charset="UTF-8">
   <title>Portfolio - leaderboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel = 'stylesheet' href='styles.css'>
 </head>
 <body>
   <a href="home.html">Home</a> <span>|</span>
   <a href="stats.html">Stats</a> <span>|</span>
   <a href="leaderboard.html">Leaderboard</a>
+  <div class="page">
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tbody = document.getElementById('leaderboard-body');
 
-  <header><h1>Ski Day Leaderboard</h1></header>
-  <p>Compare your ski day with others. Entries you submit on the Stats page will appear here automatically.</p>
+        const fakeEntries = [
+          {
+            name: "Alex",
+            conditions: "powder",
+            maxSpeed: 56.3,
+            runs: 14,
+            vertical: 14500,
+            timeSkiing: "04:12",
+            distance: 27.1
+          },
+          {
+            name: "Sophia",
+            conditions: "groomed",
+            maxSpeed: 61.7,
+            runs: 11,
+            vertical: 12500,
+            timeSkiing: "03:48",
+            distance: 22.5
+          },
+          {
+            name: "Jake",
+            conditions: "icy",
+            maxSpeed: 53.1,
+            runs: 16,
+            vertical: 16200,
+            timeSkiing: "05:06",
+            distance: 29.3
+          }
+        ];
 
-  <table id="leaderboard">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Conditions</th>
-        <th>Max Speed (mph)</th>
-        <th>Runs</th>
-        <th>Vertical (ft)</th>
-        <th>Time (HH:MM)</th>
-        <th>Distance (mi)</th>
-      </tr>
-    </thead>
-    <tbody id="leaderboard-body">
-      <!-- Fake sample rows -->
-      <tr><td>Alex</td><td>powder</td><td>56.3</td><td>14</td><td>14500</td><td>04:12</td><td>27.1</td></tr>
-      <tr><td>Sophia</td><td>groomed</td><td>61.7</td><td>11</td><td>12500</td><td>03:48</td><td>22.5</td></tr>
-      <tr><td>Jake</td><td>icy</td><td>53.1</td><td>16</td><td>16200</td><td>05:06</td><td>29.3</td></tr>
-    </tbody>
-  </table>
-    <img src="p_images/leaderboardone.jpg" alt="Chairlift Photo" width = '200'>
-    <img src="p_images/leaderboard2.jpg" alt="Mountains Photo" width = '200'>
+        function addRow(entry) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${entry.name || "Anonymous"}</td>
+            <td>${entry.conditions || ""}</td>
+            <td>${Number(entry.maxSpeed ?? "").toString()}</td>
+            <td>${Number.isFinite(entry.runs) ? entry.runs : ""}</td>
+            <td>${Number.isFinite(entry.vertical) ? entry.vertical : ""}</td>
+            <td>${entry.timeSkiing || ""}</td>
+            <td>${Number(entry.distance ?? "").toString()}</td>
+          `;
+          tbody.appendChild(tr);
+        }
+
+        function getBestEntry(entries) {
+          if (!entries.length) return null;
+          return entries.reduce((best, cur) => {
+            const bestVert = Number(best.vertical) || 0;
+            const curVert  = Number(cur.vertical)  || 0;
+            return curVert > bestVert ? cur : best;
+          });
+        }
+
+        function loadLeaderboard() {
+          tbody.innerHTML = "";
+
+          fakeEntries.forEach(addRow);
+
+          const entryKeys = Object.keys(localStorage)
+            .filter(k => k.startsWith("skiEntries_"));
+
+          entryKeys.forEach(key => {
+            const entries = JSON.parse(localStorage.getItem(key) || "[]");
+            const best = getBestEntry(entries);
+            if (best) addRow(best);
+          });
+        }
+
+        loadLeaderboard();
+      });
+    </script>
+
+
+
+
+    <header><h1>Ski Day Leaderboard</h1></header>
+    <p>Compare your ski day with others. Entries you submit on the Stats page will appear here automatically.</p>
+    <section class="card leaderboard-wrap">
+      <table id="leaderboard">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Conditions</th>
+            <th>Max Speed (mph)</th>
+            <th>Runs</th>
+            <th>Vertical (ft)</th>
+            <th>Time (HH:MM)</th>
+            <th>Distance (mi)</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+          <tr><td>Alex</td><td>powder</td><td>56.3</td><td>14</td><td>14500</td><td>04:12</td><td>27.1</td></tr>
+          <tr><td>Sophia</td><td>groomed</td><td>61.7</td><td>11</td><td>12500</td><td>03:48</td><td>22.5</td></tr>
+          <tr><td>Jake</td><td>icy</td><td>53.1</td><td>16</td><td>16200</td><td>05:06</td><td>29.3</td></tr>
+        </tbody>
+      </table>
+    </section>
+      <img src="p_images/leaderboardone.jpg" alt="Chairlift Photo" width = '200'>
+      <img src="p_images/leaderboard2.jpg" alt="Mountains Photo" width = '200'>
+  </div>
 </body>
 </html>
