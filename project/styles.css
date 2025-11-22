@@ -1,5 +1,5 @@
 /* -----------------------------
-   COLOR PALETTE (your set)
+   COLOR PALETTE
    #0d1b2a  darkest navy (bg)
    #1b263b  deep blue (cards/nav)
    #415a77  steel blue (accents)
@@ -30,7 +30,7 @@
 
 body {
   font-family: var(--font);
-  background: var(--c-dark);  /* ✅ consistent background */
+  background: var(--c-dark);
   color: var(--c-paper);
   line-height: 1.6;
   min-height: 100vh;
@@ -38,22 +38,76 @@ body {
 }
 
 /* -----------------------------
-   NAV (same on all pages)
+   ACCESSIBILITY HELPERS
 ------------------------------ */
-nav {
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 10px;
+  background: var(--c-mid);
+  color: var(--c-paper);
+  padding: 8px 12px;
+  border-radius: 8px;
+  z-index: 999;
+}
+.skip-link:focus {
+  left: 10px;
+}
+
+/* Screen-reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Strong, visible focus states */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--c-light);
+  outline-offset: 3px;
+}
+
+/* -----------------------------
+   NAVIGATION (desktop + waffle mobile)
+   IMPORTANT: This assumes your HTML uses:
+   <nav class="site-nav">
+     <button class="nav-toggle"...>
+     <div id="nav-links" class="nav-links">...</div>
+   </nav>
+------------------------------ */
+
+.site-nav {
   width: 100%;
   background: var(--c-deep);
-  padding: 14px 24px;
+  padding: 12px 18px;
   display: flex;
-  justify-content: center;
-  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 10;
   box-shadow: var(--shadow);
 }
 
-nav a {
+/* Desktop links */
+.nav-links {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.nav-links a {
   color: var(--c-paper);
   text-decoration: none;
   font-weight: 600;
@@ -62,50 +116,93 @@ nav a {
   transition: 0.2s ease;
 }
 
-nav a:hover {
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
   background: var(--c-mid);
 }
 
-/* If you can't change HTML to <nav>, this will style your top links anyway */
-body > a {
+/* Waffle button hidden on desktop */
+.nav-toggle {
+  display: none;
+  background: var(--c-mid);
   color: var(--c-paper);
-  text-decoration: none;
-  font-weight: 600;
-  margin-right: 8px;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* Mobile nav dropdown */
+@media (max-width: 600px) {
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 58px;
+    right: 12px;
+    background: var(--c-deep);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    min-width: 170px;
+    gap: 8px;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-links a {
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+  }
 }
 
 /* -----------------------------
    PAGE WRAPPER
 ------------------------------ */
+
 .page {
   width: 100%;
   max-width: var(--maxw);
   margin: 30px auto;
   padding: 0 20px;
 
-  display: flex;              /* ✅ flex layout base */
+  display: flex;
   flex-direction: column;
   gap: 26px;
 }
 
-/* -----------------------------
-   HEADERS / TEXT
------------------------------- */
+/* Typography scales down slightly on phones */
 header h1 {
-  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
   text-align: center;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
 }
 
+h2 {
+  font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+}
+
 p {
   color: var(--c-paper);
-  font-size: 1.05rem;
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
 }
 
 /* -----------------------------
-   CARDS (flex boxes)
+   CARDS / FLEX BOXES
 ------------------------------ */
+
 .card {
   background: var(--c-deep);
   border-radius: var(--radius-lg);
@@ -122,10 +219,7 @@ p {
   color: var(--c-light);
 }
 
-/* -----------------------------
-   HOME PAGE FLEX SECTIONS
-   (favorites / text / images)
------------------------------- */
+/* Home favorites layout */
 .home-grid {
   display: flex;
   flex-wrap: wrap;
@@ -133,10 +227,17 @@ p {
 }
 
 .home-grid .card {
-  flex: 1 1 320px;  /* responsive columns */
+  flex: 1 1 320px;
 }
 
-/* images */
+/* Stack home cards tighter on phones */
+@media (max-width: 600px) {
+  .home-grid .card {
+    flex: 1 1 100%;
+  }
+}
+
+/* Images */
 img {
   max-width: 100%;
   height: auto;
@@ -145,8 +246,9 @@ img {
 }
 
 /* -----------------------------
-   STATS PAGE FORM LAYOUT
+   FORMS (Stats page)
 ------------------------------ */
+
 form {
   display: flex;
   flex-direction: column;
@@ -172,7 +274,7 @@ label {
 input, select {
   width: 100%;
   padding: 10px 12px;
-  background: #0a1420; /* slightly darker than bg */
+  background: #0a1420;
   border: 1px solid var(--c-mid);
   border-radius: var(--radius-md);
   color: var(--c-paper);
@@ -194,7 +296,7 @@ input::placeholder {
   color: var(--c-paper);
 }
 
-/* buttons */
+/* Buttons */
 button {
   padding: 10px 16px;
   border: none;
@@ -211,7 +313,7 @@ button:hover {
   color: var(--c-dark);
 }
 
-/* stats page flex split (form + table) */
+/* Form + table flex split */
 .stats-flex {
   display: flex;
   gap: var(--gap);
@@ -222,11 +324,29 @@ button:hover {
   flex: 1 1 420px;
 }
 
+/* Stack on tablets/phones */
+@media (max-width: 800px) {
+  .stats-flex {
+    flex-direction: column;
+  }
+}
+
 /* -----------------------------
-   TABLES (stats + leaderboard)
+   TABLES (responsive)
+   IMPORTANT: wrap each table in:
+   <div class="table-wrap"> ... </div>
 ------------------------------ */
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+}
+
+/* Keep readable columns; scroll if needed */
 table {
   width: 100%;
+  min-width: 650px;
   border-collapse: collapse;
   margin-top: 8px;
   overflow: hidden;
@@ -252,17 +372,15 @@ tbody tr:hover {
 }
 
 /* -----------------------------
-   LEADERBOARD PAGE
+   LEADERBOARD PAGE WRAP
 ------------------------------ */
+
 .leaderboard-wrap {
   display: flex;
   flex-direction: column;
   gap: var(--gap);
 }
 
-/* -----------------------------
-   FOOTER / SMALL TEXT
------------------------------- */
 small {
   color: var(--c-light);
 }

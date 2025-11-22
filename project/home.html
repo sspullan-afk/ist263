@@ -9,9 +9,22 @@
     </head>
 
     <body>
-        <a href="home.html">Home</a> <span>|</span>
-        <a href="stats.html">Stats</a> <span>|</span>
-        <a href="leaderboard.html">Leaderboard</a>
+        <nav class="site-nav" aria-label="Primary">
+            <a class="skip-link" href="#main-content">Skip to main content</a>
+
+            <button class="nav-toggle" type="button"
+                aria-expanded="false" aria-controls="nav-links">
+                <span class="sr-only">Open navigation menu</span>
+                &#9776;
+            </button>
+
+            <div id="nav-links" class="nav-links">
+                <a href="home.html">Home</a>
+                <a href="stats.html">Stats</a>
+                <a href="leaderboard.html">Leaderboard</a>
+            </div>
+        </nav>
+
         <div class="page">
 
             <header><h1>Ski Activity Tracker</h1></header>
