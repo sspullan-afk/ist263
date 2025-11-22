@@ -37,11 +37,6 @@ body {
   padding-bottom: 50px;
 }
 
-/* -----------------------------
-   ACCESSIBILITY HELPERS
------------------------------- */
-
-/* Skip link for keyboard users */
 .skip-link {
   position: absolute;
   left: -999px;
@@ -56,7 +51,6 @@ body {
   left: 10px;
 }
 
-/* Screen-reader only text */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -69,7 +63,6 @@ body {
   border: 0;
 }
 
-/* Strong, visible focus states */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -78,14 +71,7 @@ select:focus-visible {
   outline-offset: 3px;
 }
 
-/* -----------------------------
-   NAVIGATION (desktop + waffle mobile)
-   IMPORTANT: This assumes your HTML uses:
-   <nav class="site-nav">
-     <button class="nav-toggle"...>
-     <div id="nav-links" class="nav-links">...</div>
-   </nav>
------------------------------- */
+
 
 .site-nav {
   width: 100%;
@@ -100,7 +86,6 @@ select:focus-visible {
   box-shadow: var(--shadow);
 }
 
-/* Desktop links */
 .nav-links {
   display: flex;
   gap: 14px;
@@ -121,7 +106,6 @@ select:focus-visible {
   background: var(--c-mid);
 }
 
-/* Waffle button hidden on desktop */
 .nav-toggle {
   display: none;
   background: var(--c-mid);
@@ -133,7 +117,6 @@ select:focus-visible {
   cursor: pointer;
 }
 
-/* Mobile nav dropdown */
 @media (max-width: 600px) {
   .nav-toggle {
     display: inline-flex;
@@ -167,9 +150,6 @@ select:focus-visible {
   }
 }
 
-/* -----------------------------
-   PAGE WRAPPER
------------------------------- */
 
 .page {
   width: 100%;
@@ -182,7 +162,6 @@ select:focus-visible {
   gap: 26px;
 }
 
-/* Typography scales down slightly on phones */
 header h1 {
   font-size: clamp(1.7rem, 3vw, 2.6rem);
   text-align: center;
@@ -199,9 +178,6 @@ p {
   font-size: clamp(1rem, 2.2vw, 1.1rem);
 }
 
-/* -----------------------------
-   CARDS / FLEX BOXES
------------------------------- */
 
 .card {
   background: var(--c-deep);
@@ -219,7 +195,6 @@ p {
   color: var(--c-light);
 }
 
-/* Home favorites layout */
 .home-grid {
   display: flex;
   flex-wrap: wrap;
@@ -230,7 +205,6 @@ p {
   flex: 1 1 320px;
 }
 
-/* Stack home cards tighter on phones */
 @media (max-width: 600px) {
   .home-grid .card {
     flex: 1 1 100%;
@@ -245,9 +219,6 @@ img {
   border: 2px solid var(--c-mid);
 }
 
-/* -----------------------------
-   FORMS (Stats page)
------------------------------- */
 
 form {
   display: flex;
@@ -296,7 +267,6 @@ input::placeholder {
   color: var(--c-paper);
 }
 
-/* Buttons */
 button {
   padding: 10px 16px;
   border: none;
@@ -313,7 +283,6 @@ button:hover {
   color: var(--c-dark);
 }
 
-/* Form + table flex split */
 .stats-flex {
   display: flex;
   gap: var(--gap);
@@ -324,18 +293,12 @@ button:hover {
   flex: 1 1 420px;
 }
 
-/* Stack on tablets/phones */
 @media (max-width: 800px) {
   .stats-flex {
     flex-direction: column;
   }
 }
 
-/* -----------------------------
-   TABLES (responsive)
-   IMPORTANT: wrap each table in:
-   <div class="table-wrap"> ... </div>
------------------------------- */
 
 .table-wrap {
   width: 100%;
@@ -343,7 +306,6 @@ button:hover {
   border-radius: var(--radius-md);
 }
 
-/* Keep readable columns; scroll if needed */
 table {
   width: 100%;
   min-width: 650px;
@@ -371,9 +333,6 @@ tbody tr:hover {
   background: rgba(120,141,169,0.25);
 }
 
-/* -----------------------------
-   LEADERBOARD PAGE WRAP
------------------------------- */
 
 .leaderboard-wrap {
   display: flex;
