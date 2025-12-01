@@ -7,11 +7,23 @@
     <style>
         .mobile-container{
             max-width: 1632px;
-            margin: auto;
-            background-color: blue;
-            height: 500px;
-            color: white;
-            border-radius: 10px;
+            margin: 30px auto;
+            padding: 0 20px;
+            background-color: #1b263b;
+            color: #e0e1dd;
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: 5px;
+            background: #e0e1dd;
+            color: #1b263b;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
         }
     </style>
     <script>
@@ -53,21 +65,21 @@
       }
 
     </script>
-    <style>
-    </style>
   </head>
 
   <body>
-    <button onclick="getSyracuseTemp()">Get Syracuse Weather</button>
-    <h2 id="cuse-weather"></h2>
-    <div>
-      <img id="icon" src="" alt="image of clouds"/>
-      <p id="time"></p>
-      <p id="temp"></p>
-      <p id="forecast"></p>
-    </div>
+    <div class="mobile-container">
+        <button onclick="getSyracuseTemp()" class="button">Get Syracuse Weather</button>
+        <h2 id="cuse-weather"></h2>
+        <div>
+        <img id="icon" src="" alt="Image of clouds"/>
+        <p id="time"></p>
+        <p id="temp"></p>
+        <p id="forecast"></p>
+        </div>
 
-    <button onclick="getCurrentDate()">Get Today's Date</button>
-    <p id="date"></p>
+        <button onclick="getCurrentDate()" class="button">Get Today's Date</button>
+        <p id="date"></p>
+    </div>
   </body>
 </html>
