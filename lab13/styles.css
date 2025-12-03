@@ -10,7 +10,7 @@ body {
     padding: 0;
 }
 p, table, strong, ul, h1, h2{
-    color: #E0E1DD;
+    color: white;
 }
 
 p, li{
@@ -30,7 +30,7 @@ h2 {
 }
 
 link{
-    color: #778DA9;
+    color: white;
 }
 
 nav{
@@ -99,13 +99,10 @@ img{
     }
 }
 
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: #000;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    z-index: 1000;
-    text-decoration: none;
+a:link {
+  color: white;
+}
+
+a:visited {
+  color: lightgrey;
 }
