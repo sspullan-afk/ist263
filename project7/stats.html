@@ -6,26 +6,6 @@
         <title>Portfolio - stats</title>
         <link rel = 'stylesheet' href='styles.css'>
         <meta name = "viewport" content = "width=device-width">
-    </head>
-
-    <body>
-      <nav class="site-nav" aria-label="Primary">
-        <a class="skip-link" href="#main-content">Skip to main content</a>
-
-        <button class="nav-toggle" type="button"
-          aria-expanded="false" aria-controls="nav-links">
-          <span class="sr-only">Open navigation menu</span>
-          &#9776;
-        </button>
-
-        <div id="nav-links" class="nav-links">
-          <a href="home.html">Home</a>
-          <a href="stats.html">Stats</a>
-          <a href="leaderboard.html">Leaderboard</a>
-        </div>
-      </nav>
-
-      <div class="page">
         <script>
           document.addEventListener("DOMContentLoaded", () => {
             const form = document.getElementById('ski-day-form');
@@ -138,13 +118,30 @@
             });
           });
         </script>
+    </head>
 
+    <body>
+      <nav class="site-nav" aria-label="Primary">
+        <a class="skip-link" href="#main-content">Skip to main content</a>
+        <a class="brand" href="home.html">Ski Activity Tracker</a>
 
+        <button class="nav-toggle" type="button"
+          aria-expanded="false" aria-controls="nav-links">
+          <span class="sr-only">Open navigation menu</span>
+          &#9776;
+        </button>
 
+        <div id="nav-links" class="nav-links">
+          <a href="home.html">Home</a>
+          <a href="stats.html">Stats</a>
+          <a href="leaderboard.html">Leaderboard</a>
+        </div>
+      </nav>
 
-          <header><h1>Track Your Stats</h1></header>
+      <main id="main-content" class="page">
+        <header><h1>Track Your Stats</h1></header>
 
-          <p>Log your ski stats and see how your day stacks up! Record your conditions, speed, vertical, runs, and distance all in one place. Whether you’re chasing personal bests or just keeping memories of great days on the mountain, this page helps you capture every detail of your ski adventures</p>
+        <p>Log your ski stats and see how your day stacks up! Record your conditions, speed, vertical, runs, and distance all in one place. Whether you’re chasing personal bests or just keeping memories of great days on the mountain, this page helps you capture every detail of your ski adventures</p>
           <div class="stats-flex">
             <section class="card">
               <form id="ski-day-form" action="#" method="post">
@@ -217,6 +214,6 @@
           <img src="p_images/logPage1.jpg" alt="Skier jumping through powder" width = '200'>
           <img src="p_images/logPage2.jpg" alt="Skier jumping across mountain spine" width = '200'>
         </div>
-      </div>
+      </main>
     </body>
 </html>

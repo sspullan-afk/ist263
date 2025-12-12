@@ -9,7 +9,7 @@
 <body>
   <nav class="site-nav" aria-label="Primary">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-
+    <a class="brand" href="home.html">Ski Activity Tracker</a>
     <button class="nav-toggle" type="button"
       aria-expanded="false" aria-controls="nav-links">
       <span class="sr-only">Open navigation menu</span>
@@ -23,7 +23,7 @@
     </div>
   </nav>
 
-  <div class="page">
+  <main id="main-content" class="page">
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const tbody = document.getElementById('leaderboard-body');
@@ -138,17 +138,13 @@
             <th>Distance (mi)</th>
           </tr>
         </thead>
-        <tbody id="leaderboard-body">
-          <tr><td>Alex</td><td>powder</td><td>56.3</td><td>14</td><td>14500</td><td>04:12</td><td>27.1</td></tr>
-          <tr><td>Sophia</td><td>groomed</td><td>61.7</td><td>11</td><td>12500</td><td>03:48</td><td>22.5</td></tr>
-          <tr><td>Jake</td><td>icy</td><td>53.1</td><td>16</td><td>16200</td><td>05:06</td><td>29.3</td></tr>
-        </tbody>
+        <tbody id="leaderboard-body"></tbody>
       </table>
     </section>
     <div class="hero-media">
       <img src="p_images/leaderboardone.jpg" alt="Ski racer making a sharp turn" width = '200'>
       <img src="p_images/leaderboard2.jpg" alt="downhill skier making a sharp turn" width = '200'>
     </div>
-  </div>
+  </main>
 </body>
 </html>

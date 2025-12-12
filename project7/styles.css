@@ -377,13 +377,6 @@ small {
   object-fit: cover;
 }
 
-@media (max-width: 800px) {
-  .hero-media img {
-    height: 220px;
-    flex: 1 1 100%;
-  }
-}
-
 .brand {
   color: var(--c-paper);
   text-decoration: none;
