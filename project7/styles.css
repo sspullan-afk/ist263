@@ -191,10 +191,6 @@ p {
   margin-bottom: 10px;
 }
 
-.card-muted {
-  color: var(--c-light);
-}
-
 .home-grid {
   display: flex;
   flex-wrap: wrap;
@@ -299,13 +295,6 @@ button:hover {
   }
 }
 
-
-.table-wrap {
-  width: 100%;
-  overflow-x: auto;
-  border-radius: var(--radius-md);
-}
-
 table {
   width: 100%;
   min-width: 650px;
@@ -340,27 +329,11 @@ tbody tr:hover {
   gap: var(--gap);
 }
 
-small {
-  color: var(--c-light);
-}
-
-
 .montserrat {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-}
-
-@media screen and (max-width: 800px){ 
-    nav a{
-        display: block;
-        width: 100%;
-        padding: 5px;
-    }
-    nav span{
-        display: none;
-    }
 }
 
 .hero-media {
@@ -377,6 +350,10 @@ small {
   object-fit: cover;
 }
 
+@media (max-width: 600px) {
+  .hero-media img { height: 220px; flex: 1 1 100%; }
+}
+
 .brand {
   color: var(--c-paper);
   text-decoration: none;
@@ -389,4 +366,3 @@ small {
 .brand:hover {
   background: rgba(255,255,255,0.06);
 }
-
